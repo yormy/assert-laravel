@@ -29,11 +29,12 @@
     },
     "require-dev": {
         "brianium/paratest": "^7",
+        "laravel/pint": "^1.10",
         "orchestra/testbench": "^7|^8",
         "phpunit/phpunit": "^9|^10",
         "psalm/plugin-laravel": "^2.8",
-        "vimeo/psalm": "^5.13",
-        "laravel/pint": "^1.10"
+        "thibautselingue/local-php-security-checker-installer": "^1",
+        "vimeo/psalm": "^5.13"
     },
     "autoload": {
         "psr-4": {
@@ -60,7 +61,10 @@
         "test:unit": "vendor/bin/paratest --colors=always --testdox --testsuite Unit",
         "test:feature": "vendor/bin/paratest --colors=always --testdox --testsuite Feature",
         "test-browser": "vendor/bin/phpunit tests/Browser --colors=always --testdox",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "post-update-cmd": [
+            "local-php-security-checker-installer && local-php-security-checker"
+        ]
     },
     "extra": {
         "laravel": {
