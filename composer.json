@@ -63,9 +63,6 @@
         "test-browser": "vendor/bin/phpunit tests/Browser --colors=always --testdox",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
         "---------- POST ---------- ": "",
-        "post-install-cmd": [
-            "yes | cp -Rf ./bin/githooks/. ./.git/hooks/"
-        ],
         "post-update-cmd": [
             "local-php-security-checker-installer && local-php-security-checker"
         ]
