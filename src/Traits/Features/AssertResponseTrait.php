@@ -14,6 +14,12 @@ trait AssertResponseTrait
         $this->assertEquals(Arr::get($data, 'code'), $field);
     }
 
+    protected function assertHasNotResponseCode($response, string $field)
+    {
+        $data = Arr::dot(json_decode($response->getContent(), true));
+        $this->assertNotEquals(Arr::get($data, 'code'), $field);
+    }
+
     protected function assertHasValidationError($response, string $field, $message = null)
     {
         $this->assertNotNull($response);
