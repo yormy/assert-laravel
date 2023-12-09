@@ -21,17 +21,32 @@ trait AssertResponseTrait
         $this->assertStatusValidationError($response);
         $data = Arr::dot(json_decode($response->getContent(), true));
 
-        if ($message) {
-            $this->assertTrue(Arr::exists($data, 'data.errors.'.$field.'.0'), $message);
-        } else {
-            $this->assertTrue(Arr::exists($data, 'data.errors.'.$field.'.0'));
+        // in the trait this is getting from the data. abstraction, but in this test it is not wrapped with a data
+        // probably because the wrapping is in the laravel code, and not in the package
+        if (!$message) {
+            $message = "Failed asserting $field has error";
         }
+
+        $errorsArray = $data;
+        if (array_key_exists('data', $data)) {
+            $errorsArray = $data['data'];
+        }
+        $this->assertTrue(Arr::exists($errorsArray, 'errors.'.$field.'.0'), $message);
     }
 
-    public function assertHasNotValidationError($response, string $error, $message = null)
+    protected function assertHasNotValidationError($response, string $field, $message = null)
     {
+        if (!$message) {
+            $message = "Failed asserting $field has no error";
+        }
+
         $data = Arr::dot(json_decode($response->getContent(), true));
-        $this->assertTrue(! Arr::exists($data, 'errors.'.$error.'.0'), $message);
+        $errorsArray = $data;
+        if (array_key_exists('data', $data)) {
+            $errorsArray = $data['data'];
+        }
+
+        $this->assertTrue(! Arr::exists($errorsArray, 'errors.'.$field.'.0'), $message);
     }
 
     public function assertStatusUnAuthenticated($response, $data = [], $message = null)
