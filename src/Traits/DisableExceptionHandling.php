@@ -1,6 +1,6 @@
 <?php
 
-namespace Yormy\BedrockUsers\Tests\Features\Traits;
+namespace Yormy\AssertLaravel\Traits;
 
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Exceptions\Handler;
@@ -15,11 +15,6 @@ trait DisableExceptionHandling
             {
                 //
             }
-            //
-            //            public function report(\Exception $e)
-            //            {
-            //                //
-            //            }
 
             public function render($request, \Throwable $e)
             {
