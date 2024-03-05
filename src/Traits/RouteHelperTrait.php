@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Route;
 
 trait RouteHelperTrait
 {
+    private function dumpRouteName(string $routeName)
+    {
+        $routes = $this->findRouteName($routeName);
+        dump($routes);
+    }
+
     private function findRouteName(string $routeName): Collection
     {
         return $this->findRoute('route', $routeName);
