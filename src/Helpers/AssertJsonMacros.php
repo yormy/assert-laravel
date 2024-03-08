@@ -7,8 +7,34 @@ use Illuminate\Testing\TestResponse;
 
 class AssertJsonMacros
 {
+    public static function getDataCount($self): int
+    {
+        $items = collect(json_decode($self->getContent(), true)['data']);
+        return $items->count();
+    }
+
+
     public static function register()
     {
+        TestResponse::macro('getDataCount', function () {
+            return AssertJsonMacros::getDataCount($this);
+        });
+
+        TestResponse::macro('assertJsonDataArrayEmpty', function () {
+            $itemCount = AssertJsonMacros::getDataCount($this);
+            PHPUnit::assertTrue($itemCount === 0,'Array not empty');
+        });
+
+        TestResponse::macro('assertJsonDataArrayNotEmpty', function () {
+            $itemCount = AssertJsonMacros::getDataCount($this);
+            PHPUnit::assertTrue($itemCount !== 0,'Array empty');
+        });
+
+        TestResponse::macro('assertJsonDataArrayCount', function (int $expectedCount) {
+            $itemCount = AssertJsonMacros::getDataCount($this);
+            PHPUnit::assertTrue($itemCount === $expectedCount,"Expected count: $expectedCount does not match actual count: ". $itemCount );
+        });
+
         TestResponse::macro('assertJsonDataArrayHasElement', function ($fieldname, $expectedValue, int $expectedItems = 1) {
             $items = collect(json_decode($this->getContent(), true)['data']);
             $found = (bool) $items->firstWhere($fieldname, $expectedValue);
