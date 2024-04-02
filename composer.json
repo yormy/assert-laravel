@@ -22,19 +22,16 @@
         }
     ],
     "require": {
-        "php": "^8.1|^8.2",
-        "laravel/framework": "^9|^10",
-        "illuminate/testing": "^9|^10",
+        "php": "^8.2",
+        "laravel/framework": "^11",
+        "illuminate/testing": "^11",
         "mockery/mockery": "^1.5"
     },
     "require-dev": {
         "brianium/paratest": "^7",
         "laravel/pint": "^1.10",
-        "orchestra/testbench": "^7|^8",
-        "phpunit/phpunit": "^9|^10",
-        "psalm/plugin-laravel": "^2.8",
-        "thibautselingue/local-php-security-checker-installer": "^1",
-        "vimeo/psalm": "^5.13"
+        "orchestra/testbench": "^9",
+        "phpunit/phpunit": "^11"
     },
     "autoload": {
         "psr-4": {
@@ -54,8 +51,6 @@
         "phpcs": "phpcs --standard=PSR2 -s --exclude=Generic.Files.LineLength --standard=./phpcs.xml --report-file=phpcs-report.txt",
         "---------- ANALYSIS ---------- ": "",
         "phpstan": "vendor/bin/phpstan analyze src --error-format=raw --level=4",
-        "psalm": "vendor/bin/psalm --no-diff --no-cache --report-show-info=false --report=psalm-report.txt",
-        "psalm-debug": "vendor/bin/psalm --no-cache --debug --debug-by-line",
         "---------- TEST ---------- ": "",
         "test": "vendor/bin/phpunit tests/Features tests/Unit --colors=always --testdox",
         "test:unit": "vendor/bin/paratest --colors=always --testdox --testsuite Unit",
@@ -63,8 +58,11 @@
         "test-browser": "vendor/bin/phpunit tests/Browser --colors=always --testdox",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
         "---------- POST ---------- ": "",
+        "post-install-cmd": [
+            "composer outdated"
+        ],
         "post-update-cmd": [
-            "local-php-security-checker-installer && local-php-security-checker"
+            "composer outdated"
         ]
     },
     "extra": {
