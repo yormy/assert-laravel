@@ -17,7 +17,7 @@ use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 
 return [
     'exclude' => [
-        'src/Traits/DisableExceptionHandling.php'
+        'src/Traits/DisableExceptionHandling.php',
     ],
     'remove' => [
         ForbiddenPublicPropertySniff::class,
