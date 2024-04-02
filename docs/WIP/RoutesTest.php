@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Routes;
 
 use Tests\Feature\Customer\CustomerTest;
@@ -13,7 +15,7 @@ class RoutesTest extends CustomerTest
     //        $this->routesTester($company);
     //    }
     //
-    public function testPreventAdminRoutesAsCustomer()
+    public function testPreventAdminRoutesAsCustomer(): void
     {
         $customer = $this->getCustomer();
 
@@ -33,7 +35,7 @@ class RoutesTest extends CustomerTest
         }
     }
 
-    public function testRoutesAsPerson()
+    public function testRoutesAsPerson(): void
     {
         $person = $this->getCustomer();
 
@@ -73,11 +75,10 @@ class RoutesTest extends CustomerTest
             }
 
             $this->assertContains($code, $allowedResults, $name.' ('.route($name).')');
-
         }
     }
 
-    private function debugOut(string $name, ?string $code = null)
+    private function debugOut(string $name, ?string $code = null): void
     {
         $message = $name.' ( '.route($name).' )';
         if ($code) {

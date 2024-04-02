@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yormy\AssertLaravel\Helpers;
 
 use Illuminate\Support\Collection;
@@ -7,11 +9,11 @@ use Illuminate\Support\Facades\Route;
 
 class RoutesHelper
 {
-    const IGNORE_URL = [
+    public const IGNORE_URL = [
         //        '/', // no route name
     ];
 
-    const DEBUG_URL = [
+    public const DEBUG_URL = [
         '_debugbar*',
         '_dusk*',
         'horizon*',
@@ -29,15 +31,6 @@ class RoutesHelper
         $routes = $this->getRoutesPost();
 
         return $this->filterRoutes($routes, $routeStartsWith);
-    }
-
-    private function filterRoutes(Collection $routes, ?string $routeStartsWith = null): Collection
-    {
-        if (! $routeStartsWith) {
-            return $routes;
-        }
-
-        return $routes->filter(fn ($value) => fnmatch("$routeStartsWith.*", $value->getName()));
     }
     //
     //
@@ -61,7 +54,7 @@ class RoutesHelper
             $name = $route->getName();
 
             if (! $name) {
-                $message = "* Name missing for $route->uri \r\n";
+                $message = "* Name missing for {$route->uri} \r\n";
                 fwrite(STDERR, print_r($message, true));
             }
         }
@@ -80,12 +73,21 @@ class RoutesHelper
             $name = $route->getName();
 
             if (! $name) {
-                $message = "* Name missing for $route->uri \r\n";
+                $message = "* Name missing for {$route->uri} \r\n";
                 fwrite(STDERR, print_r($message, true));
             }
         }
 
         return $routes;
+    }
+
+    private function filterRoutes(Collection $routes, ?string $routeStartsWith = null): Collection
+    {
+        if (! $routeStartsWith) {
+            return $routes;
+        }
+
+        return $routes->filter(fn ($value) => fnmatch("{$routeStartsWith}.*", $value->getName()));
     }
 
     //
@@ -157,7 +159,6 @@ class RoutesHelper
             if (count($matches) === 0) {
                 return true;
             }
-
         });
     }
 

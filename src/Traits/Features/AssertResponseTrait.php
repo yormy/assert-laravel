@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yormy\AssertLaravel\Traits\Features;
 
 use Illuminate\Http\Response;
@@ -8,19 +10,44 @@ use Illuminate\Support\Facades\Log;
 
 trait AssertResponseTrait
 {
-    protected function assertHasResponseCode($response, string $field)
+
+    public function assertStatusUnAuthenticated($response, $data = [], $message = null): void
+    {
+        $this->assertStatusHelper(Response::HTTP_UNAUTHORIZED, $response, $data, $message);
+    }
+
+    public function assertStatusServerError($response, $data = [], $message = null): void
+    {
+        $this->assertStatusHelper(Response::HTTP_INTERNAL_SERVER_ERROR, $response, $data, $message);
+    }
+
+    public function assertStatusOk($response, $data = [], $message = null): void
+    {
+        $this->assertStatusHelper(Response::HTTP_OK, $response, $data, $message);
+    }
+
+    public function assertStatusCreated($response, $data = [], $message = null): void
+    {
+        $this->assertStatusHelper(Response::HTTP_CREATED, $response, $data, $message);
+    }
+
+    public function assertStatusValidationError($response, $data = [], $message = null): void
+    {
+        $this->assertStatusHelper(Response::HTTP_UNPROCESSABLE_ENTITY, $response, $data, $message); // 422 validation error
+    }
+    protected function assertHasResponseCode($response, string $field): void
     {
         $data = Arr::dot(json_decode($response->getContent(), true));
         $this->assertEquals(Arr::get($data, 'code'), $field);
     }
 
-    protected function assertHasNotResponseCode($response, string $field)
+    protected function assertHasNotResponseCode($response, string $field): void
     {
         $data = Arr::dot(json_decode($response->getContent(), true));
         $this->assertNotEquals(Arr::get($data, 'code'), $field);
     }
 
-    protected function assertHasValidationError($response, string $field, $message = null)
+    protected function assertHasValidationError($response, string $field, $message = null): void
     {
         $this->assertNotNull($response);
 
@@ -30,7 +57,7 @@ trait AssertResponseTrait
         // in the trait this is getting from the data. abstraction, but in this test it is not wrapped with a data
         // probably because the wrapping is in the laravel code, and not in the package
         if (! $message) {
-            $message = "Failed asserting $field has error";
+            $message = "Failed asserting {$field} has error";
         }
 
         $errorsArray = $data;
@@ -40,10 +67,10 @@ trait AssertResponseTrait
         $this->assertTrue(Arr::exists($errorsArray, 'errors.'.$field.'.0'), $message);
     }
 
-    protected function assertHasNotValidationError($response, string $field, $message = null)
+    protected function assertHasNotValidationError($response, string $field, $message = null): void
     {
         if (! $message) {
-            $message = "Failed asserting $field has no error";
+            $message = "Failed asserting {$field} has no error";
         }
 
         $data = Arr::dot(json_decode($response->getContent(), true));
@@ -53,31 +80,6 @@ trait AssertResponseTrait
         }
 
         $this->assertTrue(! Arr::exists($errorsArray, 'errors.'.$field.'.0'), $message);
-    }
-
-    public function assertStatusUnAuthenticated($response, $data = [], $message = null)
-    {
-        $this->assertStatusHelper(Response::HTTP_UNAUTHORIZED, $response, $data, $message);
-    }
-
-    public function assertStatusServerError($response, $data = [], $message = null)
-    {
-        $this->assertStatusHelper(Response::HTTP_INTERNAL_SERVER_ERROR, $response, $data, $message);
-    }
-
-    public function assertStatusOk($response, $data = [], $message = null)
-    {
-        $this->assertStatusHelper(Response::HTTP_OK, $response, $data, $message);
-    }
-
-    public function assertStatusCreated($response, $data = [], $message = null)
-    {
-        $this->assertStatusHelper(Response::HTTP_CREATED, $response, $data, $message);
-    }
-
-    public function assertStatusValidationError($response, $data = [], $message = null)
-    {
-        $this->assertStatusHelper(Response::HTTP_UNPROCESSABLE_ENTITY, $response, $data, $message); // 422 validation error
     }
 
     // |--------------------------------------------------------------------------
@@ -96,7 +98,7 @@ trait AssertResponseTrait
         }
     }
 
-    private function logFailed($response, $data)
+    private function logFailed($response, $data): void
     {
         try {
             $responseData = $response->json();

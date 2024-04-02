@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yormy\AssertLaravel\Traits;
 
 use PHPUnit\Framework\Assert as PHPUnitAssert;
 
 trait AssertActionTrait
 {
-    public function assertActionUsesFormRequest(string $controller, string $method, string $form_request)
+    public function assertActionUsesFormRequest(string $controller, string $method, string $form_request): void
     {
         PHPUnitAssert::assertTrue(is_subclass_of($form_request, 'Illuminate\\Foundation\\Http\\FormRequest'), $form_request.' is not a type of Form Request');
 
@@ -26,7 +28,7 @@ trait AssertActionTrait
         PHPUnitAssert::assertTrue($actual, 'Action "'.$method.'" does not have validation using the "'.$form_request.'" Form Request.');
     }
 
-    public function assertActionUsesMiddleware($controller, $method, $middleware = null)
+    public function assertActionUsesMiddleware($controller, $method, $middleware = null): void
     {
         $router = resolve(\Illuminate\Routing\Router::class);
 

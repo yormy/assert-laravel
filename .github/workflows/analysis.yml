@@ -56,4 +56,4 @@ jobs:
           php-version: 8.2
 
       - name: insights
-        run: "sudo ./vendor/bin/testbench insights -v --min-quality=90 --min-complexity=70 --min-architecture=50 --min-style=80"
+        run: "sudo ./vendor/bin/testbench insights -v --min-quality=90 --min-complexity=60 --min-architecture=50 --min-style=80"

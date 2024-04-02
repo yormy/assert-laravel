@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yormy\AssertLaravel\Traits;
 
 use Illuminate\Foundation\Http\Kernel;
@@ -13,20 +15,20 @@ trait AssertRoutesTrait
 {
     use ReportTrait;
 
-    public function assertRouteIs($routeName)
+    public function assertRouteIs($routeName): void
     {
         $this->assertTrue(url()->current() === route($routeName));
     }
 
-    public function assertRouteIsNot($routeName)
+    public function assertRouteIsNot($routeName): void
     {
         $this->assertTrue(url()->current() !== route($routeName));
     }
 
-    public function assertRouteUsesFormRequest(string $routeName, string $formRequest)
+    public function assertRouteUsesFormRequest(string $routeName, string $formRequest): void
     {
         $controllerAction = collect(Route::getRoutes())
-            ->filter(fn (\Illuminate\Routing\Route $route) => $route->getName() == $routeName)
+            ->filter(fn (\Illuminate\Routing\Route $route) => $route->getName() === $routeName)
             ->pluck('action.controller');
 
         PHPUnitAssert::assertNotEmpty($controllerAction, 'Route "'.$routeName.'" is not defined.');
@@ -41,7 +43,7 @@ trait AssertRoutesTrait
         $this->assertActionUsesFormRequest($controller, $method, $formRequest);
     }
 
-    public function assertRouteNotUsesMiddleware(Kernel $appKernel, string $routeName, array $middlewares, $showReport = false)
+    public function assertRouteNotUsesMiddleware(Kernel $appKernel, string $routeName, array $middlewares, $showReport = false): void
     {
         $unusedMiddlewares = $this->getUnusedMiddleware($appKernel, $routeName, $middlewares);
 
@@ -52,11 +54,11 @@ trait AssertRoutesTrait
         PHPUnitAssert::assertCount(
             1,
             $unusedMiddlewares,
-            "Route `$routeName` uses not expected `".implode(', ', $unusedMiddlewares).'` middleware(s)'
+            "Route `{$routeName}` uses not expected `".implode(', ', $unusedMiddlewares).'` middleware(s)'
         );
     }
 
-    public function assertRouteUsesMiddleware(Kernel $appKernel, string $routeName, array $middlewares, $showReport = false)
+    public function assertRouteUsesMiddleware(Kernel $appKernel, string $routeName, array $middlewares, $showReport = false): void
     {
         $unusedMiddlewares = $this->getUnusedMiddleware($appKernel, $routeName, $middlewares);
 
@@ -67,7 +69,7 @@ trait AssertRoutesTrait
         PHPUnitAssert::assertCount(
             0,
             $unusedMiddlewares,
-            "Route `$routeName` does not use expected `".implode(', ', $unusedMiddlewares).'` middleware(s)'
+            "Route `{$routeName}` does not use expected `".implode(', ', $unusedMiddlewares).'` middleware(s)'
         );
     }
 
@@ -78,9 +80,7 @@ trait AssertRoutesTrait
         $route = $this->findOneRouteByName($routeName);
         $usedMiddlewares = $this->collectUsedMiddlewares($route, $middlewareGroups);
 
-        $unusedMiddlewares = array_diff($middlewares, $usedMiddlewares);
-
-        return $unusedMiddlewares;
+        return array_diff($middlewares, $usedMiddlewares);
     }
 
     private function collectUsedMiddlewares($route, array $middlewareGroups): array
@@ -100,15 +100,14 @@ trait AssertRoutesTrait
     {
         $routesFound = collect(Route::getRoutes())->filter(fn ($route) => $route->getName() === $routeName);
 
-        self::assertCount(1, $routesFound, "Multiple routes found with the name: $routeName");
+        self::assertCount(1, $routesFound, "Multiple routes found with the name: {$routeName}");
 
         return $routesFound->first();
     }
 
     private function findAllRoutesByName($routeName, array $exceptRoutes = []): Collection
     {
-        $routesFound = collect(Route::getRoutes())->filter(function ($route) use ($routeName, $exceptRoutes) {
-
+        return collect(Route::getRoutes())->filter(function ($route) use ($routeName, $exceptRoutes) {
             if (stripos($route->getName(), $routeName) !== false &&
                 ! in_array($route->getName(), $exceptRoutes)
             ) {
@@ -117,8 +116,6 @@ trait AssertRoutesTrait
 
             return false;
         });
-
-        return $routesFound;
     }
 
     //    public function assertRouteUsesMiddleware(string $routeName, array $middlewares, bool $exact = false)

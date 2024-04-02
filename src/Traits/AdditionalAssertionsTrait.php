@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yormy\AssertLaravel\Traits;
 
 use PHPUnit\Framework\Assert as PHPUnitAssert;
@@ -12,7 +14,7 @@ trait AdditionalAssertionsTrait
         return $form_request::createFromBase(SymfonyRequest::create('', 'POST', $data));
     }
 
-    public static function assertArrayStructure(array $structure, array $actual)
+    public static function assertArrayStructure(array $structure, array $actual): void
     {
         foreach ($structure as $key => $type) {
             if (is_array($type) && $key === '*') {

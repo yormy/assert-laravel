@@ -16,60 +16,60 @@ class AssertJsonMacros
         return $items->count();
     }
 
-    public static function register()
+    public static function register(): void
     {
         TestResponse::macro('getDataCount', function () {
             return AssertJsonMacros::getDataCount($this);
         });
 
-        TestResponse::macro('assertJsonDataArrayEmpty', function () {
+        TestResponse::macro('assertJsonDataArrayEmpty', function (): void {
             $itemCount = AssertJsonMacros::getDataCount($this);
             PHPUnit::assertTrue($itemCount === 0, 'Array not empty');
         });
 
-        TestResponse::macro('assertJsonDataArrayNotEmpty', function () {
+        TestResponse::macro('assertJsonDataArrayNotEmpty', function (): void {
             $itemCount = AssertJsonMacros::getDataCount($this);
             PHPUnit::assertTrue($itemCount !== 0, 'Array empty');
         });
 
-        TestResponse::macro('assertJsonDataArrayCount', function (int $expectedCount) {
+        TestResponse::macro('assertJsonDataArrayCount', function (int $expectedCount): void {
             $itemCount = AssertJsonMacros::getDataCount($this);
-            PHPUnit::assertTrue($itemCount === $expectedCount, "Expected count: $expectedCount does not match actual count: ".$itemCount);
+            PHPUnit::assertTrue($itemCount === $expectedCount, "Expected count: {$expectedCount} does not match actual count: ".$itemCount);
         });
 
-        TestResponse::macro('assertJsonDataArrayHasElement', function ($fieldname, $expectedValue, int $expectedItems = 1) {
+        TestResponse::macro('assertJsonDataArrayHasElement', function ($fieldname, $expectedValue, int $expectedItems = 1): void {
             $items = collect(json_decode($this->getContent(), true)['data']);
             $found = (bool) $items->firstWhere($fieldname, $expectedValue);
-            PHPUnit::assertTrue($found, "$fieldname with $expectedValue not found");
+            PHPUnit::assertTrue($found, "{$fieldname} with {$expectedValue} not found");
         });
 
-        TestResponse::macro('assertJsonDataItemHasElement', function ($fieldname, $expectedValue, int $expectedItems = 1) {
+        TestResponse::macro('assertJsonDataItemHasElement', function ($fieldname, $expectedValue, int $expectedItems = 1): void {
             $items = collect(json_decode($this->getContent(), true)['data']);
 
             $found = false;
             if ($items->get($fieldname) === $expectedValue) {
                 $found = true;
             }
-            PHPUnit::assertTrue($found, "$fieldname with $expectedValue not found");
+            PHPUnit::assertTrue($found, "{$fieldname} with {$expectedValue} not found");
         });
 
-        TestResponse::macro('assertJsonDataItemNotHasElement', function ($fieldname, $expectedValue, int $expectedItems = 1) {
+        TestResponse::macro('assertJsonDataItemNotHasElement', function ($fieldname, $expectedValue, int $expectedItems = 1): void {
             $items = collect(json_decode($this->getContent(), true)['data']);
 
             $found = false;
             if ($items->get($fieldname) === $expectedValue) {
                 $found = true;
             }
-            PHPUnit::assertFalse($found, "$fieldname with $expectedValue found");
+            PHPUnit::assertFalse($found, "{$fieldname} with {$expectedValue} found");
         });
 
-        TestResponse::macro('assertJsonDataArrayNotHasElement', function ($fieldname, $expectedValue, int $expectedItems = 1) {
+        TestResponse::macro('assertJsonDataArrayNotHasElement', function ($fieldname, $expectedValue, int $expectedItems = 1): void {
             $items = collect(json_decode($this->getContent(), true)['data']);
             $found = (bool) $items->firstWhere($fieldname, $expectedValue);
-            PHPUnit::assertFalse($found, "$fieldname with $expectedValue not found");
+            PHPUnit::assertFalse($found, "{$fieldname} with {$expectedValue} not found");
         });
 
-        TestResponse::macro('assertJsonDataHasTranslatedElement', function ($fieldname, $language, $expectedValue, int $expectedItems = 1) {
+        TestResponse::macro('assertJsonDataHasTranslatedElement', function ($fieldname, $language, $expectedValue, int $expectedItems = 1): void {
             $items = collect(json_decode($this->getContent(), true)['data']);
             $found = false;
 
@@ -78,9 +78,8 @@ class AssertJsonMacros
                 if ($translations[$language] === $expectedValue) {
                     $found = true;
                 }
-                PHPUnit::assertTrue($found, "$fieldname with $expectedValue not found");
+                PHPUnit::assertTrue($found, "{$fieldname} with {$expectedValue} not found");
             }
         });
-
     }
 }

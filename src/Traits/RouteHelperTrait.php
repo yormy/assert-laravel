@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 trait RouteHelperTrait
 {
-    private function dumpRouteName(string $routeName)
+    private function dumpRouteName(string $routeName): void
     {
         $routes = $this->findRouteName($routeName);
         dump($routes);
@@ -31,7 +31,6 @@ trait RouteHelperTrait
 
         $routes = collect([]);
         foreach ($routeCollection as $value) {
-
             $route = [
                 'url' => $value->uri,
                 'route' => $value->getName(),
@@ -44,10 +43,8 @@ trait RouteHelperTrait
             $routes->push($route);
         }
 
-        $items = $routes->filter(function ($item) use ($field, $searchValue) {
+        return $routes->filter(function ($item) use ($field, $searchValue) {
             return stristr($item[$field], $searchValue) !== false;
         });
-
-        return $items;
     }
 }
