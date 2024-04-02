@@ -170,26 +170,6 @@ class RoutesParameterTest extends CustomerTest
         }
     }
 
-    // in test basic class, call to show real exception in the test
-    protected function disableExceptionHandling(): void
-    {
-        $this->app->instance(ExceptionHandler::class, new class() extends Handler
-        {
-            public function __construct()
-            {
-            }
-
-            public function report(\Exception $e): void
-            {
-            }
-
-            public function render($request, \Exception $e): void
-            {
-                throw $e;
-            }
-        });
-    }
-
     private function debugOut(string $name, ?string $code = null): void
     {
         fwrite(STDERR, print_r('.', true));
