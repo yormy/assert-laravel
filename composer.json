@@ -15,12 +15,6 @@
             "role": "Developer"
         }
     ],
-    "repositories" : [
-        {
-            "type": "path",
-            "url": "../dev-tools-laravel"
-        }
-    ],
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11",
