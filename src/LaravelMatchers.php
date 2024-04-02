@@ -8,7 +8,7 @@ use PHPUnit\Framework\Assert;
 
 class LaravelMatchers
 {
-    public static function isModel(Model $model = null)
+    public static function isModel(?Model $model = null)
     {
         if (is_null($model)) {
             return \Mockery::type(Model::class);
@@ -19,7 +19,7 @@ class LaravelMatchers
         });
     }
 
-    public static function isCollection(Collection $collection = null)
+    public static function isCollection(?Collection $collection = null)
     {
         if (is_null($collection)) {
             return \Mockery::type(Collection::class);
@@ -32,7 +32,7 @@ class LaravelMatchers
         });
     }
 
-    public static function isEloquentCollection(\Illuminate\Database\Eloquent\Collection $collection = null)
+    public static function isEloquentCollection(?\Illuminate\Database\Eloquent\Collection $collection = null)
     {
         if (is_null($collection)) {
             return \Mockery::type(\Illuminate\Database\Eloquent\Collection::class);

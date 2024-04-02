@@ -109,7 +109,7 @@ trait AssertRoutesTrait
     {
         $routesFound = collect(Route::getRoutes())->filter(function ($route) use ($routeName, $exceptRoutes) {
 
-            if (false !== stripos($route->getName(), $routeName) &&
+            if (stripos($route->getName(), $routeName) !== false &&
                 ! in_array($route->getName(), $exceptRoutes)
             ) {
                 return true;

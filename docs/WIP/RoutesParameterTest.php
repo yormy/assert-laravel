@@ -190,7 +190,7 @@ class RoutesParameterTest extends CustomerTest
         });
     }
 
-    private function debugOut(string $name, string $code = null)
+    private function debugOut(string $name, ?string $code = null)
     {
         fwrite(STDERR, print_r('.', true));
 

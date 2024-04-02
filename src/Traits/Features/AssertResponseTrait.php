@@ -29,7 +29,7 @@ trait AssertResponseTrait
 
         // in the trait this is getting from the data. abstraction, but in this test it is not wrapped with a data
         // probably because the wrapping is in the laravel code, and not in the package
-        if (!$message) {
+        if (! $message) {
             $message = "Failed asserting $field has error";
         }
 
@@ -42,7 +42,7 @@ trait AssertResponseTrait
 
     protected function assertHasNotValidationError($response, string $field, $message = null)
     {
-        if (!$message) {
+        if (! $message) {
             $message = "Failed asserting $field has no error";
         }
 

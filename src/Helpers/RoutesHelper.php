@@ -17,21 +17,21 @@ class RoutesHelper
         'horizon*',
     ];
 
-    public function getFilteredRoutesGet(string $routeStartsWith = null)
+    public function getFilteredRoutesGet(?string $routeStartsWith = null)
     {
         $routes = $this->getRoutesGet();
 
         return $this->filterRoutes($routes, $routeStartsWith);
     }
 
-    public function getFilteredRoutesPost(string $routeStartsWith = null)
+    public function getFilteredRoutesPost(?string $routeStartsWith = null)
     {
         $routes = $this->getRoutesPost();
 
         return $this->filterRoutes($routes, $routeStartsWith);
     }
 
-    private function filterRoutes(Collection $routes, string $routeStartsWith = null): Collection
+    private function filterRoutes(Collection $routes, ?string $routeStartsWith = null): Collection
     {
         if (! $routeStartsWith) {
             return $routes;
@@ -139,7 +139,7 @@ class RoutesHelper
 
             // Also return optional parameter urls
             foreach ($matches as $match) {
-                if (false === strpos($match, '?}')) {
+                if (strpos($match, '?}') === false) {
                     return false;
                 }
             }

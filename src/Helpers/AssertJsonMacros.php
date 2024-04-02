@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Yormy\AssertLaravel\Helpers;
 
@@ -10,9 +12,9 @@ class AssertJsonMacros
     public static function getDataCount($self): int
     {
         $items = collect(json_decode($self->getContent(), true)['data']);
+
         return $items->count();
     }
-
 
     public static function register()
     {
@@ -22,17 +24,17 @@ class AssertJsonMacros
 
         TestResponse::macro('assertJsonDataArrayEmpty', function () {
             $itemCount = AssertJsonMacros::getDataCount($this);
-            PHPUnit::assertTrue($itemCount === 0,'Array not empty');
+            PHPUnit::assertTrue($itemCount === 0, 'Array not empty');
         });
 
         TestResponse::macro('assertJsonDataArrayNotEmpty', function () {
             $itemCount = AssertJsonMacros::getDataCount($this);
-            PHPUnit::assertTrue($itemCount !== 0,'Array empty');
+            PHPUnit::assertTrue($itemCount !== 0, 'Array empty');
         });
 
         TestResponse::macro('assertJsonDataArrayCount', function (int $expectedCount) {
             $itemCount = AssertJsonMacros::getDataCount($this);
-            PHPUnit::assertTrue($itemCount === $expectedCount,"Expected count: $expectedCount does not match actual count: ". $itemCount );
+            PHPUnit::assertTrue($itemCount === $expectedCount, "Expected count: $expectedCount does not match actual count: ".$itemCount);
         });
 
         TestResponse::macro('assertJsonDataArrayHasElement', function ($fieldname, $expectedValue, int $expectedItems = 1) {

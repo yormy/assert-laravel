@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Yormy\AssertLaravel\Traits;
 
@@ -43,7 +45,7 @@ trait RouteHelperTrait
         }
 
         $items = $routes->filter(function ($item) use ($field, $searchValue) {
-            return false !== stristr($item[$field], $searchValue);
+            return stristr($item[$field], $searchValue) !== false;
         });
 
         return $items;

@@ -77,7 +77,7 @@ class RoutesTest extends CustomerTest
         }
     }
 
-    private function debugOut(string $name, string $code = null)
+    private function debugOut(string $name, ?string $code = null)
     {
         $message = $name.' ( '.route($name).' )';
         if ($code) {
