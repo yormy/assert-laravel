@@ -16,6 +16,9 @@ use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 
 return [
+    'exclude' => [
+        'src/Traits/DisableExceptionHandling.php'
+    ],
     'remove' => [
         ForbiddenPublicPropertySniff::class,
         ForbiddenGlobals::class,
