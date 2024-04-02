@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Log;
 
 trait AssertResponseTrait
 {
-
     public function assertStatusUnAuthenticated($response, $data = [], $message = null): void
     {
         $this->assertStatusHelper(Response::HTTP_UNAUTHORIZED, $response, $data, $message);
@@ -35,6 +34,7 @@ trait AssertResponseTrait
     {
         $this->assertStatusHelper(Response::HTTP_UNPROCESSABLE_ENTITY, $response, $data, $message); // 422 validation error
     }
+
     protected function assertHasResponseCode($response, string $field): void
     {
         $data = Arr::dot(json_decode($response->getContent(), true));
