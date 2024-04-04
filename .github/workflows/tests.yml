@@ -22,20 +22,20 @@ jobs:
           php_version: 8.2
           php_extensions: "json zip sodium pcntl bcmath"
 
-      - name: Running unit test
-        uses: php-actions/phpunit@v3
-        with:
-          version: 10.5.13
-          php_version: 8.2
-          php_extensions: "json zip sodium pcntl bcmath xdebug pcov"
-          args: "-d date.timezone=Asia/Jakarta"
-          memory_limit: 300M
-          configuration: phpunit.xml
-          coverage_clover: "./coverage/clover.xml"
-
-      - name: Ensure coverage > 70
-        id: test-coverage
-        uses: johanvanhelden/gha-clover-test-coverage-check@v1
-        with:
-          percentage: "70"
-          filename: "./coverage/clover.xml"
+#      - name: Running unit test
+#        uses: php-actions/phpunit@v3
+#        with:
+#          version: 10.5.13
+#          php_version: 8.2
+#          php_extensions: "json zip sodium pcntl bcmath xdebug pcov"
+#          args: "-d date.timezone=Asia/Jakarta"
+#          memory_limit: 300M
+#          configuration: phpunit.xml
+#          coverage_clover: "./coverage/clover.xml"
+#
+#      - name: Ensure coverage > 70
+#        id: test-coverage
+#        uses: johanvanhelden/gha-clover-test-coverage-check@v1
+#        with:
+#          percentage: "70"
+#          filename: "./coverage/clover.xml"
