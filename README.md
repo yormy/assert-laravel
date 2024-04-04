@@ -1,37 +1,17 @@
+# Assert
+
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/yormy/validation.svg?style=flat-square)](https://packagist.org/packages/yormy/validation)
+[![Total Downloads](https://img.shields.io/packagist/dt/yormy/validation.svg?style=flat-square)](https://packagist.org/packages/yormy/assert)
+
 # Assert Laravel
+```Just some handy stuff```
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/yormy/assert-laravel.svg?style=flat-square)](https://packagist.org/packages/yormy/assert-laravel)
-[![Total Downloads](https://img.shields.io/packagist/dt/yormy/assert-laravel.svg?style=flat-square)](https://packagist.org/packages/yormy/assert-laravel)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/facade/ignition/run-php-tests?label=Tests)
-![Alt text](./coverage.svg)
-
-Assert helpers for developing tests
-
-## Installation
-
-You can install the package via composer:
-
-```bash
-composer require yormy/assert-laravel
-```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](../repository/.github/CONTRIBUTING.md) for details.
+# [Click for Documentation](https://yormy.github.io/assert-laravel/)
 
 ## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## Credits
-
-- [yormy](https://github.com/yormy)
-- [All Contributors](../../contributors)
+[Report security issues](https://yormy.github.io/assert-laravel/general/report_security.html)
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File]((https://yormy.github.io/assert-laravel/general/license.html) for more information.
+
