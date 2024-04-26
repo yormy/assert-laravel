@@ -2,8 +2,6 @@
 
 namespace Yormy\AssertLaravel\Traits;
 
-use Mexion\TestappCore\Domain\Tribe\Notifications\InviteMember\InviteMemberNotification;
-
 trait AssertEventSendsEmail
 {
     protected function assertEventWillSendEmail(string $toEmail, array $withContent = [])
@@ -22,6 +20,7 @@ trait AssertEventSendsEmail
              */
             $toAddresses = $mail->getTo();
 
+            $correctTo = false;
             foreach ($toAddresses as $address) {
                 if ($address->getAddress() === $toEmail) {
                     $correctTo = true;
